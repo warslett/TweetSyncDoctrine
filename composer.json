@@ -1,0 +1,30 @@
+{
+    "name": "warslett/tweet-sync-doctrine",
+    "description": "Synchronises Tweets between twitter and a local doctrine repository",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "William Arslett",
+            "email": "wia2@aber.ac.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/yaml": "^2.5.0",
+        "symfony/dependency-injection": ">=2.5.0",
+        "symfony/console": ">=2.5.0",
+        "doctrine/orm": ">=2.5.0",
+        "warslett/tweet-sync": "0.1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.6.*",
+        "mockery/mockery": "^0.9.4",
+        "behat/behat": "3.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WArslett\\TweetSyncDoctrine\\": "src/",
+            "test\\WArslett\\TweetSyncDoctrine\\": "test/"
+        }
+    }
+}

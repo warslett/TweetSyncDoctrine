@@ -1,0 +1,10 @@
+WArslett\TweetSync\Model\TwitterUser:
+  type: entity
+  repositoryClass: WArslett\TweetSyncDoctrine\ORM\Doctrine\TwitterUserRepository
+  table: twitter__users
+  id:
+    id:
+      type: string
+  fields:
+    screenName:
+      type: string
