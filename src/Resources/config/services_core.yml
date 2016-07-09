@@ -39,3 +39,5 @@ services:
   warslett_tweet_sync_sync_command:
     class: WArslett\TweetSyncDoctrine\Console\SyncUserCommand
     arguments: [@warslett_tweet_sync_sync]
+    tags:
+      -  { name: console.command }

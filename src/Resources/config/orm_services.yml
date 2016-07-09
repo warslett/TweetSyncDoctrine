@@ -22,3 +22,5 @@ services:
   warslett_tweet_sync_init_command:
     class: WArslett\TweetSyncDoctrine\Console\InitCommand
     arguments: [@doctrine.orm.entity_manager]
+    tags:
+      -  { name: console.command }
