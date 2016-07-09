@@ -53,14 +53,14 @@ class FeatureContext implements Context
         }
         touch($db_file_loc);
 
-        $paths = array(__DIR__ . "/../../src/Resources/config/doctrine");
+        $paths = array(__DIR__ . "/../../src/Resources/config/doctrine" => 'WArslett\TweetSync\Model');
 
         $dbParams = array(
             'driver'   => 'pdo_sqlite',
             'path'     => $db_file_loc
         );
 
-        $yamlDriver = new \Doctrine\ORM\Mapping\Driver\YamlDriver($paths, '.orm.yml');
+        $yamlDriver = new \Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver($paths);
         $config = Setup::createConfiguration();
         $config->setMetadataDriverImpl($yamlDriver);
         $this->entityManager = EntityManager::create($dbParams, $config);

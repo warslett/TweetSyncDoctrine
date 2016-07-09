@@ -1,24 +1,24 @@
 services:
 
   doctrine.orm.yaml_driver:
-    class: \Doctrine\ORM\Mapping\Driver\YamlDriver
-    arguments: [["%app.root%/Resources/config/doctrine"], ".orm.yml"]
+    class: Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver
+    arguments: [{"%app.root%/Resources/config/doctrine" : "WArslett\TweetSync\Model"}]
 
   doctrine.orm.config:
-    class: \Doctrine\ORM\Configuration
-    factory_class: \Doctrine\ORM\Tools\Setup
+    class: Doctrine\ORM\Configuration
+    factory_class: Doctrine\ORM\Tools\Setup
     factory_method: createConfiguration
     calls:
       - [setMetadataDriverImpl, [@doctrine.orm.yaml_driver]]
 
   doctrine.orm.entity_manager:
-    class: \Doctrine\ORM\EntityManager
-    factory_class: \Doctrine\ORM\EntityManager
+    class: Doctrine\ORM\EntityManager
+    factory_class: Doctrine\ORM\EntityManager
     factory_method: create
     arguments:
       - %database.config%
       - @doctrine.orm.config
 
   warslett_tweet_sync_init_command:
-    class: \WArslett\TweetSyncDoctrine\Console\InitCommand
+    class: WArslett\TweetSyncDoctrine\Console\InitCommand
     arguments: [@doctrine.orm.entity_manager]
