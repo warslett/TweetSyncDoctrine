@@ -60,7 +60,9 @@ class FeatureContext implements Context
             'path'     => $db_file_loc
         );
 
-        $config = Setup::createYAMLMetadataConfiguration($paths);
+        $yamlDriver = new \Doctrine\ORM\Mapping\Driver\YamlDriver($paths, '.orm.yml');
+        $config = Setup::createConfiguration();
+        $config->setMetadataDriverImpl($yamlDriver);
         $this->entityManager = EntityManager::create($dbParams, $config);
         $schemaTool = new SchemaTool($this->entityManager);
         $schemaTool->createSchema($this->entityManager->getMetadataFactory()->getAllMetadata());

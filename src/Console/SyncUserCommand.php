@@ -27,7 +27,7 @@ class SyncUserCommand extends Command
     {
         $this
             ->setName('tweetsync:user')
-            ->setDescription('Greet someone')
+            ->setDescription('Sync recent tweets by a specified user')
             ->addArgument(
                 'username',
                 InputArgument::REQUIRED,

@@ -1,0 +1,41 @@
+services:
+
+  warslett_tweet_sync_user_factory:
+    class: \WArslett\TweetSync\Model\TwitterUserFactory
+
+  warslett_tweet_sync_oauth:
+    class: \Abraham\TwitterOAuth\TwitterOAuth
+    arguments:
+      - %warslett_tweet_sync.consumer_key%
+      - %warslett_tweet_sync.consumer_secret%
+      - %warslett_tweet_sync.oauth_access_token%
+      - %warslett_tweet_sync.oauth_access_token_secret%
+
+  warslett_tweet_sync_remote_service:
+    class: \WArslett\TweetSync\Remote\TwitterOAuthRemoteService
+    arguments: [@warslett_tweet_sync_oauth]
+
+  warslett_tweet_sync_persistence_service:
+    class: \WArslett\TweetSyncDoctrine\ORM\Doctrine\TweetPersistenceService
+    arguments: [@doctrine.orm.entity_manager]
+
+  warslett_tweet_sync_user_repository:
+    class: \WArslett\TweetSync\Model\TwitterUserRepository
+    factory_service: warslett_tweet_sync_persistence_service
+    factory_method:  getTwitterUserRepository
+
+  warslett_tweet_sync_tweet_factory:
+    class: \WArslett\TweetSync\Model\TweetFactory
+    arguments: [@warslett_tweet_sync_user_repository]
+
+  warslett_tweet_sync_sync:
+    class: \WArslett\TweetSync\Remote\TweetSync
+    arguments:
+      - @warslett_tweet_sync_remote_service
+      - @warslett_tweet_sync_persistence_service
+      - @warslett_tweet_sync_tweet_factory
+      - @warslett_tweet_sync_user_factory
+
+  warslett_tweet_sync_sync_command:
+    class: \WArslett\TweetSyncDoctrine\Console\SyncUserCommand
+    arguments: [@warslett_tweet_sync_sync]

@@ -31,10 +31,11 @@ class ConsoleRunner
 
         $container->setParameter('app.root', __DIR__);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/Resources/config/'));
-        $loader->load('services.yml');
+        $loader->load('orm_services.yml');
+        $loader->load('services_core.yml');
 
-        $this->application->add($container->get('twitter_sync_command'));
-        $this->application->add($container->get('twitter_init_command'));
+        $this->application->add($container->get('warslett_tweet_sync_sync_command'));
+        $this->application->add($container->get('warslett_tweet_sync_init_command'));
     }
 
     /**
