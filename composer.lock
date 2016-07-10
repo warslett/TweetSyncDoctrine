@@ -823,16 +823,16 @@
         },
         {
             "name": "warslett/tweet-sync",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/warslett/TweetSync.git",
-                "reference": "aa1e7ebad9e2cf2004da5d9a2cf6e940156d0de5"
+                "reference": "90798f649f96d116a7db93da97d50f9c8510fe8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/warslett/TweetSync/zipball/aa1e7ebad9e2cf2004da5d9a2cf6e940156d0de5",
-                "reference": "aa1e7ebad9e2cf2004da5d9a2cf6e940156d0de5",
+                "url": "https://api.github.com/repos/warslett/TweetSync/zipball/90798f649f96d116a7db93da97d50f9c8510fe8b",
+                "reference": "90798f649f96d116a7db93da97d50f9c8510fe8b",
                 "shasum": ""
             },
             "require": {
@@ -861,7 +861,7 @@
                 }
             ],
             "description": "Library for building applications that synchronise tweets with twitter",
-            "time": "2015-11-17 16:43:03"
+            "time": "2016-07-10 14:17:40"
         }
     ],
     "packages-dev": [
