@@ -59,10 +59,10 @@ require __DIR__.'/vendor/autoload.php';
 use WArslett\TweetSyncDoctrine\ConsoleRunner;
 
 ConsoleRunner::configureFromArray([
-    'warslett_tweet_sync_consumer_key' => 'YOUR CONSUMER KEY',
-    'warslett_tweet_sync_consumer_secret' => 'YOUR CONSUMER SECRET',
-    'warslett_tweet_sync_oauth_access_token' => 'YOUR OAUTH ACCESS TOKEN',
-    'warslett_tweet_sync_oauth_access_token_secret' => 'YOUR OAUTH ACCESS TOKEN SECRET',
+    'warslett_tweet_sync.consumer_key' => 'YOUR CONSUMER KEY',
+    'warslett_tweet_sync.consumer_secret' => 'YOUR CONSUMER SECRET',
+    'warslett_tweet_sync.oauth_access_token' => 'YOUR OAUTH ACCESS TOKEN',
+    'warslett_tweet_sync.oauth_access_token_secret' => 'YOUR OAUTH ACCESS TOKEN SECRET',
     'database.config' => [
         // Replace with your own db params
         // See: http://doctrine-orm.readthedocs.org/projects/doctrine-dbal/en/latest/reference/configuration.html
