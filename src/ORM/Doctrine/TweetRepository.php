@@ -12,7 +12,7 @@ class TweetRepository extends EntityRepository implements TweetRepositoryInterfa
     public function findByUsername($username)
     {
         return $this->_em->createQuery(
-            'SELECT t FROM \WArslett\TweetSync\Model\Tweet AS t JOIN t.user AS u WHERE u.screenName = :username'
+            'SELECT t FROM \WArslett\TweetSync\Model\Tweet AS t JOIN t.user AS u WHERE u.screenName = :username ORDER BY t.createdAt DESC'
         )->setParameter(':username', $username)->execute();
     }
 }

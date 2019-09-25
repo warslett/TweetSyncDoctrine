@@ -3,7 +3,9 @@
 namespace WArslett\TweetSyncDoctrine\ORM\Doctrine;
 
 
+use Doctrine\Common\Proxy\AbstractProxyFactory;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use WArslett\TweetSync\Model\Tweet;
 use WArslett\TweetSync\Model\TweetPersistenceService as TweetPersistenceServiceInterface;
@@ -88,9 +90,13 @@ class TweetPersistenceService implements TweetPersistenceServiceInterface
      */
     public static function create($dbParams)
     {
-        $paths = array(__DIR__ . "/../../Resources/config/doctrine");
+        $yamlDriver = new SimplifiedYamlDriver([
+            __DIR__ . "/../../Resources/config/doctrine" => 'WArslett\TweetSync\Model'
+        ]);
 
-        $config = Setup::createYAMLMetadataConfiguration($paths);
+        $config = Setup::createConfiguration();
+        $config->setMetadataDriverImpl($yamlDriver);
+        $config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS);
         $entityManager = EntityManager::create($dbParams, $config);
 
         return new self($entityManager);

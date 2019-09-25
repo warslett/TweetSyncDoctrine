@@ -1,26 +1,42 @@
 services:
 
-  doctrine.orm.yaml_driver:
-    class: Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver
-    arguments: [{"%app.root%/Resources/config/doctrine" : "WArslett\TweetSync\Model"}]
+  warslett_tweet_sync_user_factory:
+    class: WArslett\TweetSync\Model\TwitterUserFactory
 
-  doctrine.orm.config:
-    class: Doctrine\ORM\Configuration
-    factory_class: Doctrine\ORM\Tools\Setup
-    factory_method: createConfiguration
-    calls:
-      - [setMetadataDriverImpl, [@doctrine.orm.yaml_driver]]
-
-  doctrine.orm.entity_manager:
-    class: Doctrine\ORM\EntityManager
-    factory_class: Doctrine\ORM\EntityManager
-    factory_method: create
+  warslett_tweet_sync_oauth:
+    class: Abraham\TwitterOAuth\TwitterOAuth
     arguments:
-      - %database.config%
-      - @doctrine.orm.config
+      - %warslett_tweet_sync.consumer_key%
+      - %warslett_tweet_sync.consumer_secret%
+      - %warslett_tweet_sync.oauth_access_token%
+      - %warslett_tweet_sync.oauth_access_token_secret%
 
-  warslett_tweet_sync_init_command:
-    class: WArslett\TweetSyncDoctrine\Console\InitCommand
-    arguments: [@doctrine.orm.entity_manager]
+  warslett_tweet_sync_remote_service:
+    class: WArslett\TweetSync\Remote\TwitterOAuthRemoteService
+    arguments: ['@warslett_tweet_sync_oauth']
+
+  warslett_tweet_sync_persistence_service:
+    class: WArslett\TweetSyncDoctrine\ORM\Doctrine\TweetPersistenceService
+    arguments: ['@doctrine.orm.entity_manager']
+
+  warslett_tweet_sync_user_repository:
+    class: WArslett\TweetSync\Model\TwitterUserRepository
+    factory: ['@warslett_tweet_sync_persistence_service', getTwitterUserRepository]
+
+  warslett_tweet_sync_tweet_factory:
+    class: WArslett\TweetSync\Model\TweetFactory
+    arguments: ['@warslett_tweet_sync_user_repository']
+
+  warslett_tweet_sync_sync:
+    class: WArslett\TweetSync\Remote\TweetSync
+    arguments:
+      - '@warslett_tweet_sync_remote_service'
+      - '@warslett_tweet_sync_persistence_service'
+      - '@warslett_tweet_sync_tweet_factory'
+      - '@warslett_tweet_sync_user_factory'
+
+  warslett_tweet_sync_sync_command:
+    class: WArslett\TweetSyncDoctrine\Console\SyncUserCommand
+    arguments: ['@warslett_tweet_sync_sync']
     tags:
       -  { name: console.command }
